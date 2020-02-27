@@ -146,7 +146,7 @@ namespace Microsoft.SeleniumTools.Edge
         /// <param name="options">The <see cref="EdgeOptions"/> to be used with the Edge driver.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public EdgeDriver(EdgeDriverService service, EdgeOptions options, TimeSpan commandTimeout)
-            : base(new DriverServiceCommandExecutor(service, commandTimeout), ConvertOptionsToCapabilities(options))
+            : base(new DriverServiceCommandExecutor(service, commandTimeout), ConvertOptionsToCapabilities(options, service.UsingChromium))
         {
             // Add the custom commands unique to Chromium
             this.AddCustomChromiumCommand(GetNetworkConditionsCommand, CommandInfo.GetCommand, "/session/{sessionId}/chromium/network_conditions");
@@ -228,14 +228,26 @@ namespace Microsoft.SeleniumTools.Edge
             return response.Value;
         }
 
-        private static ICapabilities ConvertOptionsToCapabilities(EdgeOptions options)
+        private static ICapabilities ConvertOptionsToCapabilities(EdgeOptions options, bool serviceUsingChromium)
         {
             if (options == null)
             {
                 throw new ArgumentNullException("options", "options must not be null");
             }
 
-            return options.ToCompatibleCapabilities();
+            if (serviceUsingChromium != options.UseChromium)
+            {
+                if (serviceUsingChromium)
+                {
+                    throw new WebDriverException("options.UseChromium must be set to true when using an Edge Chromium driver service.");
+                }
+                else
+                {
+                    throw new WebDriverException("options.UseChromium must be set to false when using an Edge Legacy driver service.");
+                }
+            }
+
+            return options.ToCapabilities();
         }
 
         private void AddCustomChromiumCommand(string commandName, string method, string resourcePath)

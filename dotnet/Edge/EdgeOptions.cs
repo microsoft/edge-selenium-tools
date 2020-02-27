@@ -87,9 +87,10 @@ namespace Microsoft.SeleniumTools.Edge
         /// </summary>
         public static readonly string Capability = "ms:edgeOptions";
 
-        private const string CompatibleBrowserNameValue = "MicrosoftEdge";
-        private const string ChromiumBrowserNameValue = "msedge";
+        private const string BrowserNameValue = "MicrosoftEdge";
 
+        // Engine switching
+        private const string UseChromiumCapability = "ms:edgeChromium";
         private bool useChromium = false;
 
         // Edge Legacy options
@@ -139,7 +140,7 @@ namespace Microsoft.SeleniumTools.Edge
 
         public EdgeOptions() : base()
         {
-            this.BrowserName = CompatibleBrowserNameValue;
+            this.BrowserName = BrowserNameValue;
             this.AddKnownCapabilityName(EdgeOptions.Capability, "current EdgeOptions class instance");
             this.AddKnownCapabilityName(CapabilityType.LoggingPreferences, "SetLoggingPreference method");
             this.AddKnownCapabilityName(EdgeOptions.ArgumentsEdgeOption, "AddArguments method");
@@ -664,12 +665,7 @@ namespace Microsoft.SeleniumTools.Edge
         /// <returns>The DesiredCapabilities for Edge with these options.</returns>
         public override ICapabilities ToCapabilities()
         {
-            if (this.useChromium)
-            {
-                return ToChromiumCapabilities();
-            }
-
-            return ToLegacyCapabilities();
+            return this.useChromium ? ToChromiumCapabilities() : ToLegacyCapabilities();
         }
 
         private ICapabilities ToChromiumCapabilities()
@@ -677,6 +673,7 @@ namespace Microsoft.SeleniumTools.Edge
             Dictionary<string, object> edgeOptions = this.BuildEdgeOptionsDictionary();
 
             DesiredCapabilities capabilities = this.GenerateDesiredCapabilities(false);
+            capabilities.SetCapability(EdgeOptions.UseChromiumCapability, this.useChromium);
             capabilities.SetCapability(EdgeOptions.Capability, edgeOptions);
 
             Dictionary<string, object> loggingPreferences = this.GenerateLoggingPreferencesDictionary();
@@ -699,6 +696,7 @@ namespace Microsoft.SeleniumTools.Edge
         private ICapabilities ToLegacyCapabilities()
         {
             DesiredCapabilities capabilities = this.GenerateDesiredCapabilities(false);
+            capabilities.SetCapability(EdgeOptions.UseChromiumCapability, this.useChromium);
 
             if (this.useInPrivateBrowsing)
             {
@@ -722,29 +720,6 @@ namespace Microsoft.SeleniumTools.Edge
 
             // Should return capabilities.AsReadOnly(), and will in a future release.
             return capabilities;
-        }
-
-        public ICapabilities ToCompatibleCapabilities()
-        {
-            if (this.useChromium)
-            {
-                // Earlier versions of msedgedriver only match "MicrosoftEdge" as the browserName. Later versions
-                // also match the newer "msedge" browserName. Create a W3C standards-compliant capabilities request
-                // which will match either browser name.
-
-                // Create a shallow copy of this EdgeOptions instance with all of the same capabilities except the browserName.
-                // The shallow copy object should not be used outside of this method.
-                EdgeOptions alwaysMatch = this.MemberwiseClone() as EdgeOptions;
-                alwaysMatch.BrowserName = null;
-
-                // Use firstMatch capabilities to match each supported browserName values.
-                EdgeOptions firstMatchChromium = new EdgeOptions() { BrowserName = ChromiumBrowserNameValue };
-                EdgeOptions firstMatchCompatible = new EdgeOptions() { BrowserName = CompatibleBrowserNameValue };
-                return new RemoteSessionSettings(alwaysMatch, firstMatchChromium, firstMatchCompatible);
-            }
-
-            // Use the existing ToCapabilities implementation to Edge Legacy since it accepts only one browserName.
-            return ToCapabilities();
         }
 
         private Dictionary<string, object> BuildEdgeOptionsDictionary()
