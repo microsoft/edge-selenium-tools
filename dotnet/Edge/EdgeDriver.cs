@@ -91,7 +91,7 @@ namespace Microsoft.SeleniumTools.Edge
         /// </summary>
         /// <param name="service">The <see cref="EdgeDriverService"/> used to initialize the driver.</param>
         public EdgeDriver(EdgeDriverService service)
-            : this(service, new EdgeOptions())
+            : this(service, new EdgeOptions() { UseChromium = service.UsingChromium })
         {
         }
 
