@@ -1,3 +1,5 @@
+TODO: Create a file called LICENSE (not LICENSE.TXT, LICENSE.md, etc.)…
+
 # Selenium Tools for Microsoft Edge
 
 Selenium Tools for Microsoft Edge extends [Selenium 3](https://www.selenium.dev/) with an unified driver to help you write automated tests for both the Edge Legacy (EdgeHTML) and new Edge Chromium browsers.
