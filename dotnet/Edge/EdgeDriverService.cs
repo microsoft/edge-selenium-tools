@@ -1,4 +1,8 @@
 ﻿// <copyright file="EdgeDriverService.cs" company="WebDriver Committers">
+//
+// Portions Copyright Microsoft 2020
+// Licensed under the Apache License, Version 2.0
+//
 // Licensed to the Software Freedom Conservancy (SFC) under one
 // or more contributor license agreements. See the NOTICE file
 // distributed with this work for additional information
