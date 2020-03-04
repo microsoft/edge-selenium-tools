@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.SeleniumTools.Edge
+namespace Microsoft.Edge.SeleniumTools
 {
     /// <summary>
     /// Provides manipulation of getting and setting network conditions from Edge.

@@ -20,7 +20,7 @@
 // limitations under the License.
 // </copyright>
 
-namespace Microsoft.SeleniumTools.Edge
+namespace Microsoft.Edge.SeleniumTools
 {
     /// <summary>
     /// Represents the type-safe options for setting settings for emulating a

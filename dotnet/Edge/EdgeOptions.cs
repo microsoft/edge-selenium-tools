@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 
-namespace Microsoft.SeleniumTools.Edge
+namespace Microsoft.Edge.SeleniumTools
 {
     /// <summary>
     /// Specifies the behavior of waiting for page loads in the Edge driver.

@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.SeleniumTools.Edge
+namespace Microsoft.Edge.SeleniumTools
 {
     /// <summary>
     /// Represents the type-safe options for setting preferences for performance

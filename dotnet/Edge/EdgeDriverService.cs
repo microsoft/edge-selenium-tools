@@ -28,7 +28,7 @@ using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 
-namespace Microsoft.SeleniumTools.Edge
+namespace Microsoft.Edge.SeleniumTools
 {
     /// <summary>
     /// Exposes the service provided by the native MicrosoftWebDriver or msedgedriver executable.

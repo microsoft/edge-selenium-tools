@@ -25,7 +25,7 @@ using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium;
 
-namespace Microsoft.SeleniumTools.Edge
+namespace Microsoft.Edge.SeleniumTools
 {
     /// <summary>
     /// Provides a mechanism to write tests against Edge Legacy (EdgeHTML) and Edge Chromium
