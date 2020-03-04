@@ -1,6 +1,6 @@
 # Selenium Tools for Microsoft Edge
 
-Selenium Tools for Microsoft Edge extends [Selenium 3](https://www.selenium.dev/) with an unified driver to help you write automated tests for both the Edge Legacy (EdgeHTML) and new Edge Chromium browsers.
+Selenium Tools for Microsoft Edge extends [Selenium 3](https://www.selenium.dev/) with a unified driver to help you write automated tests for both the Edge Legacy (EdgeHTML) and new Edge Chromium browsers.
 
 The EdgeDriver and EdgeDriverService classes included in this package are 100% backward-compatible with Selenium's built-in EdgeDriver, and will run Edge Legacy by default so you can use our classes as a seamless drop-in replacement. In addition to being compatible with your existing Selenium tests, Selenium Tools for Microsoft Edge gives you the ability to drive the new Edge Chromium browser and unlock all of the latest functionality!
 
