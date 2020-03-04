@@ -68,7 +68,7 @@ namespace Microsoft.SeleniumTools.Edge
         }
 
         /// <summary>
-        /// Gets or a value indicating whether the driver service is using Edge Chromium.
+        /// Gets a value indicating whether the driver service is using Edge Chromium.
         /// </summary>
         public bool UsingChromium
         {
