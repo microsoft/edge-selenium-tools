@@ -39,6 +39,7 @@ namespace Edge.Test
         }
 
         [TestMethod]
+        [Ignore] // Edge Legacy is not available on Azure hosted environment.
         public void TestDefault()
         {
             var driver = new EdgeDriver();
@@ -53,6 +54,7 @@ namespace Edge.Test
         }
 
         [TestMethod]
+        [Ignore] // Edge Legacy is not available on Azure hosted environment.
         public void TestLegacyOptions()
         {
             var driver = new EdgeDriver(new EdgeOptions() { UseChromium = false });
@@ -115,6 +117,7 @@ namespace Edge.Test
         }
 
         [TestMethod]
+        [Ignore] // Edge Legacy is not available on Azure hosted environment.
         public void TestLegacyServiceWithLegacyOptions()
         {
             using (var service = EdgeDriverService.CreateDefaultService())
@@ -132,6 +135,7 @@ namespace Edge.Test
         }
 
         [TestMethod]
+        [Ignore] // Edge Legacy is not available on Azure hosted environment.
         public void TestLegacyServiceWithChromiumOptions()
         {
             using (var service = EdgeDriverService.CreateDefaultService())
