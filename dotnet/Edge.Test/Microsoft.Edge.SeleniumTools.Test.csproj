@@ -60,9 +60,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Edge\Edge.csproj">
+    <ProjectReference Include="..\Edge\Microsoft.Edge.SeleniumTools.csproj">
       <Project>{341F7687-6C2A-41AE-99F1-6D9A0322422A}</Project>
-      <Name>Edge</Name>
+      <Name>Microsoft.Edge.SeleniumTools</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

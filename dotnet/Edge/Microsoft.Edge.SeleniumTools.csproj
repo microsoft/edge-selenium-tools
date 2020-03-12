@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/microsoft/edge-selenium-tools</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>selenium webdriver edge dotnet</PackageTags>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
