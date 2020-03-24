@@ -25,7 +25,7 @@ For more information, and instructions on selecting the correct driver for your 
 
 ### Installation
 
-TODO: Steps for installing the NuGet package.
+Add a reference to the [Microsoft.Edge.SeleniumTools](https://www.nuget.org/packages/Microsoft.Edge.SeleniumTools) package to your .NET project.
 
 ## Basic Usage
 
