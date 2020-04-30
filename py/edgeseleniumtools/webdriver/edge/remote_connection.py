@@ -22,7 +22,7 @@ class EdgeRemoteConnection(RemoteConnection):
 
     def __init__(self, remote_server_addr, keep_alive=True):
         RemoteConnection.__init__(self, remote_server_addr, keep_alive)
-        self._commands["launchApp"] = ('POST', '/session/$sessionId/edge/launch_app')
-        self._commands["setNetworkConditions"] = ('POST', '/session/$sessionId/edge/network_conditions')
-        self._commands["getNetworkConditions"] = ('GET', '/session/$sessionId/edge/network_conditions')
+        self._commands["launchApp"] = ('POST', '/session/$sessionId/chromium/launch_app')
+        self._commands["setNetworkConditions"] = ('POST', '/session/$sessionId/chromium/network_conditions')
+        self._commands["getNetworkConditions"] = ('GET', '/session/$sessionId/chromium/network_conditions')
         self._commands['executeCdpCommand'] = ('POST', '/session/$sessionId/ms/cdp/execute')

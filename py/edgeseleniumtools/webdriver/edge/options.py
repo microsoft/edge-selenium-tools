@@ -26,7 +26,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 class Options(object):
     KEY = "ms:edgeOptions"
 
-    def __init__(self, use_chromium=False):
+    def __init__(self):
         self._page_load_strategy = "normal"
         self._binary_location = ''
         self._arguments = []
@@ -35,7 +35,15 @@ class Options(object):
         self._experimental_options = {}
         self._debugger_address = None
         self._caps = DesiredCapabilities.EDGE.copy()
-        self.use_chromium = use_chromium
+        self._use_chromium = False
+    
+    @property
+    def use_chromium(self):
+        return self._use_chromium
+
+    @use_chromium.setter
+    def use_chromium(self, value):
+        self._use_chromium = bool(value)
 
     @property
     def page_load_strategy(self):

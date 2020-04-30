@@ -29,8 +29,7 @@ class WebDriver(RemoteWebDriver):
     def __init__(self, executable_path='MicrosoftWebDriver.exe',
                  capabilities=None, port=0, verbose=False, service_log_path=None,
                  log_path=None, keep_alive=False,
-                 desired_capabilities=None, service_args=None,
-                 options=None, edge_options=None,  use_chromium=False):
+                 desired_capabilities=None, service_args=None, options=None):
         """
         Creates a new instance of the edge driver.
 
@@ -49,34 +48,22 @@ class WebDriver(RemoteWebDriver):
            capabilities only, such as "proxy" or "loggingPref".
          - service_args - List of args to pass to the driver service
          - options - this takes an instance of EdgeOptions
-         - edge_options - Deprecated argument for options
-         - use_chromium - Whether to use chromium edge driver, default to use legacy edge driver
+
          """
-        self.use_chromium = use_chromium
 
-        if edge_options:
-            warnings.warn('use options instead of edge_options',
-                          DeprecationWarning, stacklevel=2)
-            options = edge_options
+        self._use_chromium = False
+        if options and options.use_chromium:
+            self._use_chromium = True
 
-        # options use_chromium flag validation
-        if self.use_chromium and options and not options.use_chromium:
-            raise Exception(
-                'options.use_chromium must be set to true when using an Edge Chromium driver service.')
-        if not self.use_chromium and options and options.use_chromium:
-            raise Exception(
-                'options.use_chromium must be set to false when using an Edge Legacy driver service.')
-
-        if self.use_chromium:
-            if options is None:
-                # desired_capabilities stays as passed in
-                if desired_capabilities is None:
-                    desired_capabilities = self.create_options().to_capabilities()
+        if options is None:
+            # desired_capabilities stays as passed in
+            if desired_capabilities is None:
+                desired_capabilities = self.create_options().to_capabilities()
+        else:
+            if desired_capabilities is None:
+                desired_capabilities = options.to_capabilities()
             else:
-                if desired_capabilities is None:
-                    desired_capabilities = options.to_capabilities()
-                else:
-                    desired_capabilities.update(options.to_capabilities())
+                desired_capabilities.update(options.to_capabilities())
 
         if log_path:
             warnings.warn('use service_log_path instead of log_path',
@@ -84,27 +71,19 @@ class WebDriver(RemoteWebDriver):
             service_log_path = log_path
 
         self.port = port
-        if self.port == 0:
+        if not self._use_chromium and self.port == 0:
             self.port = utils.free_port()
 
-        if self.use_chromium:
-            self.service = Service(
+        self.service = Service(
                 executable_path,
-                port=port,
+                port=self.port,
                 verbose=verbose,
                 service_args=service_args,
                 log_path=service_log_path)
-            self.service.start()
-        else:
-            self.edge_service = Service(
-                executable_path, 
-                port=self.port, 
-                verbose=verbose, 
-                log_path=service_log_path)
-            self.edge_service.start()
+        self.service.start()
 
         try:
-            if self.use_chromium:
+            if self._use_chromium:
                 RemoteWebDriver.__init__(
                     self,
                     command_executor=EdgeRemoteConnection(
@@ -194,10 +173,8 @@ class WebDriver(RemoteWebDriver):
         except Exception:
             # We don't care about the message because something probably has gone wrong
             pass
-        if self.use_chromium:
+        finally:
             self.service.stop()
-        else:
-            self.edge_service.stop()
 
     def create_options(self):
-        return Options(self.use_chromium)
+        return Options()

@@ -39,8 +39,7 @@ class Service(service.Service):
         :param service_args : List of args to pass to the edgedriver service
         
         """
-
-        self.service_args = []
+        self.service_args = service_args or []
         if verbose:
             self.service_args.append("--verbose")
 
