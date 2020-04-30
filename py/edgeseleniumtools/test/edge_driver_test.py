@@ -22,11 +22,9 @@ from edgeseleniumtools import webdriver
 class EdgeDriverTest(unittest.TestCase):
     def test_default(self):
         try:
-            options = webdriver.EdgeOptions()
-            driver = webdriver.Edge(options = options)
-            cap = options.to_capabilities()
+            driver = webdriver.Edge()
+            cap = driver.capabilities
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
-            self.assertFalse(cap['ms:edgeChromium'])
         except:
             self.assertTrue(False, 'Test default options failed.')
         else:
@@ -37,9 +35,8 @@ class EdgeDriverTest(unittest.TestCase):
             options = webdriver.EdgeOptions()
             options.use_chromium = False
             driver = webdriver.Edge(options = options)
-            cap = options.to_capabilities()
+            cap = driver.capabilities
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
-            self.assertFalse(cap['ms:edgeChromium'])
         except:
             self.assertTrue(False, 'Test legacy options failed.')
         else:
@@ -50,9 +47,8 @@ class EdgeDriverTest(unittest.TestCase):
             options = webdriver.EdgeOptions()
             options.use_chromium = True
             driver = webdriver.Edge('msedgedriver.exe', options = options)
-            cap = options.to_capabilities()
-            self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Chromium.')
-            self.assertTrue(cap['ms:edgeChromium'])
+            cap = driver.capabilities
+            self.assertEqual('msedge', cap['browserName'], 'Driver launches Edge Chromium.')
 
             result = driver.execute_cdp_cmd('Browser.getVersion', {})
             self.assertTrue('userAgent' in result, 'Driver can send Chromium-specific commands.')
@@ -89,6 +85,7 @@ class EdgeDriverTest(unittest.TestCase):
         cap = options.to_capabilities()
         self.assertEqual('MicrosoftEdge', cap['browserName'])
         self.assertIn('ms:edgeOptions', cap)
+        self.assertTrue(cap['ms:edgeChromium'])
 
         edge_options_dict = cap['ms:edgeOptions']
         self.assertIsNotNone(edge_options_dict)
@@ -103,6 +100,7 @@ class EdgeDriverTest(unittest.TestCase):
         self.assertEqual('MicrosoftEdge', cap['browserName'])
         self.assertEqual('eager', cap['pageLoadStrategy'])
         self.assertFalse('ms:edgeOptions' in cap)
+        self.assertFalse(cap['ms:edgeChromium'])
 
 if __name__=='__main__':
     unittest.main()
