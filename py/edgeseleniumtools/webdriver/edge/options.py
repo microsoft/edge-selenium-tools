@@ -80,9 +80,11 @@ class Options(object):
                 edge_options["debuggerAddress"] = self.debugger_address
 
             caps[self.KEY] = edge_options
+            caps['ms:edgeChromium'] = True
         else:
             caps = self._caps
             caps['pageLoadStrategy'] = self._page_load_strategy
+            caps['ms:edgeChromium'] = False
         return caps
 
     @property

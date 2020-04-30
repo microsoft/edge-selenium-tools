@@ -25,6 +25,7 @@ class EdgeDriverTest(unittest.TestCase):
             options = webdriver.EdgeOptions()
             cap = options.to_capabilities()
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
+            self.assertFalse(cap['ms:edgeChromium'])
         except:
             self.assertTrue(False, 'Test default options failed.')
     
@@ -34,6 +35,7 @@ class EdgeDriverTest(unittest.TestCase):
             options.use_chromium = False
             cap = options.to_capabilities()
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
+            self.assertFalse(cap['ms:edgeChromium'])
         except:
             self.assertTrue(False, 'Test legacy options failed.')
 
@@ -44,6 +46,7 @@ class EdgeDriverTest(unittest.TestCase):
             driver = webdriver.Edge('msedgedriver.exe', options = options)
             cap = options.to_capabilities()
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Chromium.')
+            self.assertTrue(cap['ms:edgeChromium'])
 
             result = driver.execute_cdp_cmd('Browser.getVersion', {})
             self.assertTrue('userAgent' in result, 'Driver can send Chromium-specific commands.')
