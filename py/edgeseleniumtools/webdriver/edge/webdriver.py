@@ -51,9 +51,14 @@ class WebDriver(RemoteWebDriver):
 
          """
 
-        self._use_chromium = False
+        use_chromium = False
         if options and options.use_chromium:
-            self._use_chromium = True
+            use_chromium = True
+
+        # Note that legacy edge uses capabilities while chrome edge 
+        # uses desired_capabilities as argument
+        if not use_chromium and capabilities is not None:
+            desired_capabilities = capabilities
 
         if options is None:
             # desired_capabilities stays as passed in
@@ -71,8 +76,6 @@ class WebDriver(RemoteWebDriver):
             service_log_path = log_path
 
         self.port = port
-        if not self._use_chromium and self.port == 0:
-            self.port = utils.free_port()
 
         self.service = Service(
                 executable_path,
@@ -83,21 +86,12 @@ class WebDriver(RemoteWebDriver):
         self.service.start()
 
         try:
-            if self._use_chromium:
-                RemoteWebDriver.__init__(
-                    self,
-                    command_executor=EdgeRemoteConnection(
-                        remote_server_addr=self.service.service_url,
-                        keep_alive=keep_alive),
-                    desired_capabilities=desired_capabilities)
-            else:
-                RemoteWebDriver.__init__(
-                    self,
-                    command_executor=RemoteConnection(
-                        remote_server_addr='http://localhost:%d' % self.port,
-                        resolve_ip=False,
-                        keep_alive=keep_alive),
-                    desired_capabilities=capabilities)
+            RemoteWebDriver.__init__(
+                self,
+                command_executor = EdgeRemoteConnection(
+                remote_server_addr=self.service.service_url,
+                keep_alive=keep_alive),
+                desired_capabilities=desired_capabilities)
         except Exception:
             self.quit()
             raise

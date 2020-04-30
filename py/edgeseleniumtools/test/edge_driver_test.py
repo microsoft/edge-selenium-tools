@@ -23,21 +23,27 @@ class EdgeDriverTest(unittest.TestCase):
     def test_default(self):
         try:
             options = webdriver.EdgeOptions()
+            driver = webdriver.Edge(options = options)
             cap = options.to_capabilities()
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
             self.assertFalse(cap['ms:edgeChromium'])
         except:
             self.assertTrue(False, 'Test default options failed.')
+        else:
+            driver.quit()
     
     def test_legacy_options(self):
         try:
             options = webdriver.EdgeOptions()
             options.use_chromium = False
+            driver = webdriver.Edge(options = options)
             cap = options.to_capabilities()
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
             self.assertFalse(cap['ms:edgeChromium'])
         except:
             self.assertTrue(False, 'Test legacy options failed.')
+        else:
+            driver.quit()
 
     def test_chromium_options(self):
         try:
