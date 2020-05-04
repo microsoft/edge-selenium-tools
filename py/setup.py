@@ -44,8 +44,7 @@ setup(
     license = 'Apache 2.0',
     packages = [
         'msedge', 
-        'msedge.selenium_tools', 
-        'msedge.selenium_tools.webdriver'
+        'msedge.selenium_tools'
         ],
     install_requires = [
         "selenium==3.141"

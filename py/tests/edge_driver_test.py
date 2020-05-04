@@ -14,12 +14,12 @@
 
 import unittest
 import sys
-from msedge.selenium_tools import webdriver
+from msedge.selenium_tools import Edge, EdgeOptions, EdgeService
 
 class EdgeDriverTest(unittest.TestCase):
     def test_default(self):
         try:
-            driver = webdriver.Edge()
+            driver = Edge()
             cap = driver.capabilities
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
         except:
@@ -29,9 +29,9 @@ class EdgeDriverTest(unittest.TestCase):
     
     def test_legacy_options(self):
         try:
-            options = webdriver.EdgeOptions()
+            options = EdgeOptions()
             options.use_chromium = False
-            driver = webdriver.Edge(options = options)
+            driver = Edge(options = options)
             cap = driver.capabilities
             self.assertEqual('MicrosoftEdge', cap['browserName'], 'Driver launches Edge Legacy.')
         except:
@@ -41,9 +41,9 @@ class EdgeDriverTest(unittest.TestCase):
 
     def test_chromium_options(self):
         try:
-            options = webdriver.EdgeOptions()
+            options = EdgeOptions()
             options.use_chromium = True
-            driver = webdriver.Edge('msedgedriver.exe', options = options)
+            driver = Edge('msedgedriver.exe', options = options)
             cap = driver.capabilities
             self.assertEqual('msedge', cap['browserName'], 'Driver launches Edge Chromium.')
 
@@ -55,26 +55,26 @@ class EdgeDriverTest(unittest.TestCase):
             driver.quit()
     
     def test_chromium_driver_with_chromium_options(self):
-        options = webdriver.EdgeOptions()
+        options = EdgeOptions()
         options.use_chromium = True
         try:
-            driver = webdriver.Edge(options=options)
+            driver = Edge(options=options)
         except:
             self.assertTrue(False, 'Test chromium driver with chromium options failed.')
         else:
             driver.quit()
     
     def test_legacy_driver_with_legacy_options(self):
-        options = webdriver.EdgeOptions()
+        options = EdgeOptions()
         try:
-            driver =  webdriver.Edge(options=options)
+            driver =  Edge(options=options)
         except Exception as e:
             self.assertTrue(False, 'Test legacy driver with legacy options failed.')
         else:
             driver.quit()
 
     def test_chromium_options_to_capabilities(self):
-        options = webdriver.EdgeOptions()
+        options = EdgeOptions()
         options.use_chromium = True
         options._page_load_strategy = 'eager'            # common
         options._debugger_address = 'localhost:9222'     # chromium only
@@ -89,7 +89,7 @@ class EdgeDriverTest(unittest.TestCase):
         self.assertEqual('localhost:9222', edge_options_dict['debuggerAddress'])
 
     def test_legacy_options_to_capabilities(self):
-        options = webdriver.EdgeOptions()
+        options = EdgeOptions()
         options._page_load_strategy = 'eager'            # common
         options._debugger_address = 'localhost:9222'     # chromium only
 
