@@ -1,18 +1,51 @@
+# Licensed to the Software Freedom Conservancy (SFC) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The SFC licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+# Licensed to the Software Freedom Conservancy (SFC) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The SFC licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
 from setuptools import setup
 
 setup(
-    name = 'edgeseleniumtools',
-    version = '0.1',
-    description = 'The package is to extend selenium 3 for both legacy and chromium edge',
+    name = 'msedge-selenium-tools',
+    version = '3.141.0',
+    description = 'An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).',
     url = 'https://github.com/microsoft/edge-selenium-tools',
-    author = 'Microsoft',
-    author_email = 'guangyue.xu@microsoft.com',
+    author = 'Microsoft Corporation',
+    author_email = 'EdgeDevToolsOSS@microsoft.com',
     license = 'Apache 2.0',
     packages = [
-        'edgeseleniumtools', 
-        'edgeseleniumtools.webdriver', 
-        'edgeseleniumtools.webdriver.edge',
-        'edgeseleniumtools.test'
+        'msedge', 
+        'msedge.selenium_tools', 
+        'msedge.selenium_tools.webdriver'
         ],
     install_requires = [
         "selenium==3.141"
