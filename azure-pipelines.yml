@@ -33,8 +33,23 @@ steps:
     contents: '*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet'
 
+- script: |
+    python -m pip install --upgrade pip
+    displayName: 'Install Python Dependencies'
+
+- script: |
+    python setup.py sdist
+  cwd: 'py'
+  displayName: 'Create Python Source Distribution'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'py\dist'
+    contents: '*.tar.gz'
+    targetFolder: '$(Build.ArtifactStagingDirectory)\py'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    ArtifactName: 'dist'
     publishLocation: 'Container'
