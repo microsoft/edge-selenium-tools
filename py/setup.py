@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from os.path import dirname, join, abspath
 from setuptools import setup
 
 setup(
     name = 'msedge-selenium-tools',
     version = '3.141.0',
     description = 'An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).',
+    long_description = open(join(abspath(dirname(__file__)), 'README')).read(),
     url = 'https://github.com/microsoft/edge-selenium-tools',
     author = 'Microsoft Corporation',
     author_email = 'EdgeDevToolsOSS@microsoft.com',
@@ -25,9 +27,9 @@ setup(
     packages = [
         'msedge', 
         'msedge.selenium_tools'
-        ],
+    ],
     install_requires = [
-        "selenium==3.141"
+        'selenium==3.141'
     ],
     zip_safe = False
 )
