@@ -14,9 +14,14 @@
 
 import unittest
 import sys
+import os
+
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from msedge.selenium_tools import Edge, EdgeOptions, EdgeService
 
 class EdgeDriverTest(unittest.TestCase):
+
+    @unittest.skip(reason="Edge Legacy is not available on Azure hosted environment.")
     def test_default(self):
         try:
             driver = Edge()
@@ -26,7 +31,8 @@ class EdgeDriverTest(unittest.TestCase):
             self.assertTrue(False, 'Test default options failed.')
         else:
             driver.quit()
-    
+
+    @unittest.skip(reason="Edge Legacy is not available on Azure hosted environment.")
     def test_legacy_options(self):
         try:
             options = EdgeOptions()
@@ -53,7 +59,7 @@ class EdgeDriverTest(unittest.TestCase):
             self.assertTrue(False, 'Test chromium options failed.')
         else:
             driver.quit()
-    
+
     def test_chromium_driver_with_chromium_options(self):
         options = EdgeOptions()
         options.use_chromium = True
@@ -63,7 +69,8 @@ class EdgeDriverTest(unittest.TestCase):
             self.assertTrue(False, 'Test chromium driver with chromium options failed.')
         else:
             driver.quit()
-    
+
+    @unittest.skip(reason="Edge Legacy is not available on Azure hosted environment.")
     def test_legacy_driver_with_legacy_options(self):
         options = EdgeOptions()
         try:
