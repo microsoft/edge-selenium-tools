@@ -29,7 +29,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: 'edge-selenium-tools\dotnet\Edge\bin\Release'
+    sourceFolder: 'dotnet\Edge\bin\Release'
     contents: '*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
