@@ -35,11 +35,12 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    displayName: 'Install Python Dependencies'
+  workingFolder: 'py'
+  displayName: 'Install Python Dependencies'
 
 - script: |
     python setup.py sdist
-  cwd: 'py'
+  workingFolder: 'py'
   displayName: 'Create Python Source Distribution'
 
 - task: CopyFiles@2
