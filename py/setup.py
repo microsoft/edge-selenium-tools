@@ -15,12 +15,15 @@
 from os.path import dirname, join, abspath
 from setuptools import setup
 
+with open(join(abspath(dirname(__file__)), '..', 'README.md'), 'r') as fh:
+    long_description = fh.read()
+
 setup(
     name = 'msedge-selenium-tools',
     version = '3.141.0',
     description = 'An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).',
-    long_description = open(join(abspath(dirname(__file__)), '..', 'README.md')).read(),
-    long_description_content_type="text/markdown",
+    long_description = long_description,
+    long_description_content_type = 'text/markdown',
     url = 'https://github.com/microsoft/edge-selenium-tools',
     author = 'Microsoft Corporation',
     author_email = 'EdgeDevToolsOSS@microsoft.com',
@@ -31,6 +34,21 @@ setup(
     ],
     install_requires = [
         'selenium==3.141'
+    ],
+    classifiers = [
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
+        'Operating System :: POSIX',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: MacOS :: MacOS X',
+        'Topic :: Software Development :: Testing',
+        'Topic :: Software Development :: Libraries',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6'
     ],
     zip_safe = False
 )
