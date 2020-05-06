@@ -1,5 +1,7 @@
 # Selenium Tools for Microsoft Edge
 
+[![Build Status](https://dev.azure.com/ms/edge-selenium-tools/_apis/build/status/microsoft.edge-selenium-tools?branchName=master)](https://dev.azure.com/ms/edge-selenium-tools/_build/latest?definitionId=345&branchName=master)
+
 Selenium Tools for Microsoft Edge extends [Selenium 3](https://www.selenium.dev/) with a unified driver to help you write automated tests for both the Microsoft Edge (EdgeHTML) and new Microsoft Edge (Chromium) browsers.
 
 The libraries included in this project are fully compatible with Selenium's built-in Edge libraries, and run Microsoft Edge (EdgeHTML) by default so you can use our project as a seamless drop-in replacement. In addition to being compatible with your existing Selenium tests, Selenium Tools for Microsoft Edge gives you the ability to drive the new Microsoft Edge (Chromium) browser and unlock all of the latest functionality!
