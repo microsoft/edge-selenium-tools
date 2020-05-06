@@ -350,5 +350,6 @@ MigrationBackup/
 .ionide/
 
 
+py/build
 py/dist
 py/*.egg-info
