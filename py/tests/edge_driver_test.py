@@ -49,7 +49,7 @@ class EdgeDriverTest(unittest.TestCase):
         try:
             options = EdgeOptions()
             options.use_chromium = True
-            driver = Edge('msedgedriver.exe', options = options)
+            driver = Edge(options = options)
             cap = driver.capabilities
             self.assertEqual('msedge', cap['browserName'], 'Driver launches Edge Chromium.')
 
@@ -64,7 +64,7 @@ class EdgeDriverTest(unittest.TestCase):
         options = EdgeOptions()
         options.use_chromium = True
         try:
-            driver = Edge(options=options)
+            driver = Edge('msedgedriver.exe', options=options)
         except:
             self.assertTrue(False, 'Test chromium driver with chromium options failed.')
         else:
@@ -74,7 +74,7 @@ class EdgeDriverTest(unittest.TestCase):
     def test_legacy_driver_with_legacy_options(self):
         options = EdgeOptions()
         try:
-            driver =  Edge(options=options)
+            driver =  Edge('MicrosoftWebDriver.exe', options=options)
         except Exception as e:
             self.assertTrue(False, 'Test legacy driver with legacy options failed.')
         else:

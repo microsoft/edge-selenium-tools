@@ -29,7 +29,7 @@ from .options import Options
 
 class WebDriver(RemoteWebDriver):
 
-    def __init__(self, executable_path='MicrosoftWebDriver.exe',
+    def __init__(self, executable_path='',
                  capabilities=None, port=0, verbose=False, service_log_path=None,
                  log_path=None, keep_alive=False,
                  desired_capabilities=None, service_args=None, options=None):
@@ -57,6 +57,9 @@ class WebDriver(RemoteWebDriver):
         use_chromium = False
         if options and options.use_chromium:
             use_chromium = True
+
+        if executable_path is '':
+            executable_path = 'msedgedriver' if use_chromium else 'MicrosoftWebDriver.exe'
 
         # Note that legacy edge uses capabilities while chrome edge 
         # uses desired_capabilities as argument

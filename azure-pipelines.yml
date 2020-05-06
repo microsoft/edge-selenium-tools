@@ -1,0 +1,66 @@
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    platform: 'any cpu'
+    configuration: 'release'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'dotnet\Edge\bin\Release'
+    contents: '*.nupkg'
+    targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet'
+
+- task: CopyFiles@2
+  inputs:
+    contents: |
+      LICENSE
+      README.md
+    targetFolder: 'py'
+  displayName: 'Copy license and readme to python package'
+
+- script: |
+    python -m pip install --upgrade pip setuptools wheel
+  workingDirectory: 'py'
+  displayName: 'Install python dependencies'
+
+- script: |
+    python setup.py sdist bdist_wheel
+  workingDirectory: 'py'
+  displayName: 'Create python package'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'py\dist'
+    contents: |
+      *.tar.gz
+      *.whl
+    targetFolder: '$(Build.ArtifactStagingDirectory)\py'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dist'
+    publishLocation: 'Container'
