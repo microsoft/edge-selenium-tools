@@ -31,7 +31,7 @@ class WebDriver(RemoteWebDriver):
 
     def __init__(self, executable_path='',
                  capabilities=None, port=0, verbose=False, service_log_path=None,
-                 log_path=None, keep_alive=True,
+                 log_path=None, keep_alive=None,
                  desired_capabilities=None, service_args=None, options=None):
         """
         Creates a new instance of the edge driver.
@@ -57,6 +57,12 @@ class WebDriver(RemoteWebDriver):
         use_chromium = False
         if options and options.use_chromium:
             use_chromium = True
+
+        if keep_alive is None:
+            if use_chromium: 
+                keep_alive = True
+            else:
+                keep_alive = False
 
         if executable_path is '':
             executable_path = 'msedgedriver' if use_chromium else 'MicrosoftWebDriver.exe'
