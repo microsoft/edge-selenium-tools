@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Selenium.WebDriver" Version="[3.141.0]" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.*-*" />
   </ItemGroup>
 
 </Project>
