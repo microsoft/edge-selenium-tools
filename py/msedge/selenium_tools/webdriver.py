@@ -31,7 +31,7 @@ class WebDriver(RemoteWebDriver):
 
     def __init__(self, executable_path='',
                  capabilities=None, port=0, verbose=False, service_log_path=None,
-                 log_path=None, keep_alive=False,
+                 log_path=None, keep_alive=True,
                  desired_capabilities=None, service_args=None, options=None):
         """
         Creates a new instance of the edge driver.
