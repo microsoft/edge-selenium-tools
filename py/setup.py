@@ -15,7 +15,7 @@
 from os.path import dirname, join, abspath
 from setuptools import setup
 
-with open(join(abspath(dirname(__file__)), '..', 'README.md'), 'r') as fh:
+with open(join(abspath(dirname(__file__)), 'README.md'), 'r') as fh:
     long_description = fh.read()
 
 setup(
