@@ -20,7 +20,7 @@ with open(join(abspath(dirname(__file__)), 'README.md'), 'r') as fh:
 
 setup(
     name = 'msedge-selenium-tools',
-    version = '3.141.0',
+    version = '3.141.1',
     description = 'An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).',
     long_description = long_description,
     long_description_content_type = 'text/markdown',
