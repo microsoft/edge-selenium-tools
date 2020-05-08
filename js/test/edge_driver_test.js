@@ -8,7 +8,37 @@ describe('JS selenium binding tests', function() {
     it('test default', async function(){
         try{
         let driver = await new Builder()
+            .forBrowser('chrome')
+            .build();
+
+        let cap = await driver.getCapabilities();
+        await assert.equal(cap.get('browserName'), 'chrome');
+        
+        driver.quit();
+        }catch(e){
+            console.log(e);
+        }
+    });
+
+    it('test default', async function(){
+        let driver = await new Builder()
             .forBrowser('MicrosoftEdge')
+            .build();
+
+        let cap = await driver.getCapabilities();
+        await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
+        
+        driver.quit();
+    });
+
+    it('test legacy edge', async function(){
+        try{
+        let options = await new edge.Options();
+        await options.setEdgeChromium(false);
+
+        let driver = await new Builder()
+            .forBrowser('MicrosoftEdge')
+            .setEdgeOptions(options)
             .build();
 
         let cap = await driver.getCapabilities();
@@ -20,35 +50,24 @@ describe('JS selenium binding tests', function() {
         }
     });
 
-    // it('test legacy edge', async function(){
-    //     let options = await new edge.Options();
-    //     await options.setEdgeChromium(false);
+    it('test chromium edge', async function(){
+        try{
+        let options = await new edge
+            .Options()
+            .setEdgeChromium(true);
 
-    //     let driver = await new Builder()
-    //         .forBrowser('MicrosoftEdge')
-    //         .setEdgeOptions(options)
-    //         .build();
+        let driver = await new Builder()
+            .forBrowser('MicrosoftEdge')
+            .setEdgeOptions(options)
+            .build();
 
-    //     let cap = await driver.getCapabilities();
-    //     await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
-        
-    //     driver.quit();
-    // });
+        let cap = await driver.getCapabilities();
+        await assert.equal(cap.get('browserName'), 'msedge');
 
-    // it('test chromium edge', async function(){
-    //     let options = await new edge
-    //         .Options()
-    //         .setEdgeChromium(true);
-
-    //     let driver = await new Builder()
-    //         .forBrowser('MicrosoftEdge')
-    //         .setEdgeOptions(options)
-    //         .build();
-
-    //     let cap = await driver.getCapabilities();
-    //     await assert.equal(cap.get('browserName'), 'msedge');
-
-    //     await driver.quit();
-    // });
+        await driver.quit();
+        }catch(e){
+            console.log(e);
+        }
+    });
 });
 
