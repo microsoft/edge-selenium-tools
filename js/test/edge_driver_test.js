@@ -46,5 +46,22 @@ describe('JS selenium binding tests', function() {
 
         await driver.quit();
     });
+
+    it('test legacy options to capabilities', async function(){
+        let options = await new edge.Options();
+        let cap = await options.toCapabilities();
+        await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
+        await assert.equal(cap.has('edgeOptions'), false);
+    });
+
+    it('test chromium options to capabilities', async function(){
+        let options = await new edge
+            .Options()
+            .setEdgeChromium(true);
+        let cap = await options.toCapabilities();
+        await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
+        await assert.equal(cap.has('edgeOptions'), true);
+        await assert.equal(cap.get('edgeOptions').getEdgeChromium(), true);
+    });
 });
 
