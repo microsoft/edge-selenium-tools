@@ -49,34 +49,35 @@
  * You may also create a {@link Driver} with its own driver service. This is
  * useful if you need to capture the server's log output for a specific session:
  *
- *     var edge = require('selenium-webdriver/edge');
+ *     let edge = require('selenium-webdriver/edge');
  *
- *     var service = new edge.ServiceBuilder()
+ *     let service = new edge.ServiceBuilder()
  *         .setPort(55555)
  *         .build();
  *
- *     var options = new edge.Options();
+ *     let options = new edge.Options();
  *     // configure browser options ...
  *
- *     var driver = edge.Driver.createSession(options, service);
+ *     let driver = edge.Driver.createSession(options, service);
  *
  * Users should only instantiate the {@link Driver} class directly when they
  * need a custom driver service configuration (as shown above). For normal
  * operation, users should start MicrosoftEdge using the
  * {@link ./builder.Builder selenium-webdriver.Builder}.
  *
- * [MicrosoftEdgeDriver]: https://msdn.microsoft.com/en-us/library/mt188085(v=vs.85).aspx
+ * [Microsoft EdgeDriver]: https://docs.microsoft.com/en-us/microsoft-edge/webdriver
  */
 
 'use strict';
 
-const http = require('selenium-webdriver/http'),
-  io = require('selenium-webdriver/io'),
-  capabilities = require('selenium-webdriver/lib/capabilities'),
-  promise = require('selenium-webdriver/lib/promise'),
-  Symbols = require('selenium-webdriver/lib/symbols'),
-  webdriver = require('selenium-webdriver/lib/webdriver'),
-  remote = require('selenium-webdriver/remote');
+const fs = require('fs');
+const http = require('selenium-webdriver/http');
+const  io = require('selenium-webdriver/io');
+const capabilities = require('selenium-webdriver/lib/capabilities');
+const promise = require('selenium-webdriver/lib/promise');
+const Symbols = require('selenium-webdriver/lib/symbols');
+const webdriver = require('selenium-webdriver/lib/webdriver');
+const remote = require('selenium-webdriver/remote');
 const { Capabilities, Capability } = require('selenium-webdriver/lib/capabilities');
 const command = require('selenium-webdriver/lib/command');
 const logging = require('selenium-webdriver/lib/logging');
@@ -84,14 +85,15 @@ const logging = require('selenium-webdriver/lib/logging');
 const EDGEDRIVER_LEGACY_EXE = 'MicrosoftWebDriver.exe';
 const EDGEDRIVER_CHROMIUM_EXE =
   process.platform === 'win32' ? 'msedgedriver.exe' : 'msedgedriver';
-const USE_EDGE_CHROMIUM = 'useEdgeChromium';
+
 
 /**
  * Option keys.
  * @enum {string}
  */
 const CAPABILITY_KEY = {
-  PAGE_LOAD_STRATEGY: 'pageLoadStrategy'
+  PAGE_LOAD_STRATEGY: 'pageLoadStrategy',
+  USE_EDGE_CHROMIUM: 'ms:edgeChromium'
 };
 
 /**
@@ -135,7 +137,7 @@ function configureExecutor(executor) {
     '/session/:sessionId/chromium/network_conditions');
 }
 
-const OPTIONS_CAPABILITY_KEY = 'edgeOptions';
+const OPTIONS_CAPABILITY_KEY = 'ms:edgeOptions';
 
 /**
  * Class for managing MicrosoftEdgeDriver specific options.
@@ -175,7 +177,7 @@ class Options {
   static fromCapabilities(caps) {
     let options = new Options();
 
-    if (caps[USE_EDGE_CHROMIUM]) {// chromium edge
+    if (caps[CAPABILITY_KEY.USE_EDGE_CHROMIUM]) {// chromium edge
       let o = caps.get(OPTIONS_CAPABILITY_KEY);
       if (o instanceof Options) {
         options = o;
@@ -185,9 +187,9 @@ class Options {
           addExtensions(o.extensions || []).
           detachDriver(o.detach).
           excludeSwitches(o.excludeSwitches || []).
-          setEdgeBinaryPath(o.binary).
-          setEdgeLogFile(o.logPath).
-          setEdgeMinidumpPath(o.minidumpPath).
+          setBinaryPath(o.binary).
+          setBrowserLogFile(o.logPath).
+          setBrowserMinidumpPath(o.minidumpPath).
           setLocalState(o.localState).
           setMobileEmulation(o.mobileEmulation).
           setUserPreferences(o.prefs).
@@ -295,7 +297,7 @@ class Options {
   /**
    * Sets the path to the Edge binary to use. On Mac OS X, this path should
    * reference the actual Edge executable, not just the application binary
-   * (e.g. "/Applications/Edge.app/Contents/MacOS/msedge").
+   * (e.g. "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge").
    *
    * The binary path be absolute or relative to edgedriver server
    * executable, but it must exist on the machine that will launch Edge.
@@ -303,7 +305,7 @@ class Options {
    * @param {string} path The path to the Edge binary to use.
    * @return {!Options} A self reference.
    */
-  setEdgeBinaryPath(path) {
+  setBinaryPath(path) {
     this.options_.binary = path;
     return this;
   }
@@ -421,16 +423,6 @@ class Options {
   }
 
   /**
-   * Configures the EdgeDriver to launch Edge on Android via adb. This
-   * function is shorthand for
-   * {@link #androidPackage options.androidPackage('com.android.edge')}.
-   * @return {!Options} A self reference.
-   */
-  androidEdge() {
-    return this.androidPackage('com.android.edge');
-  }
-
-  /**
  * Sets the package name of the Edge or WebView app.
  *
  * @param {?string} pkg The package to connect to, or `null` to disable Android
@@ -474,7 +466,7 @@ class Options {
  * @param {string} path Path to the log file to use.
  * @return {!Options} A self reference.
  */
-  setEdgeLogFile(path) {
+  setBrowserLogFile(path) {
     this.options_.logPath = path;
     return this;
   }
@@ -485,7 +477,7 @@ class Options {
    * @param {string} path The directory path.
    * @return {!Options} A self reference.
    */
-  setEdgeMinidumpPath(path) {
+  setBrowserMinidumpPath(path) {
     this.options_.minidumpPath = path;
     return this;
   }
@@ -552,7 +544,8 @@ class Options {
       caps.
         set(Capability.PROXY, this.proxy_).
         set(Capability.LOGGING_PREFS, this.logPrefs_).
-        set(OPTIONS_CAPABILITY_KEY, this);
+        set(OPTIONS_CAPABILITY_KEY, this).
+        set(CAPABILITY_KEY.USE_EDGE_CHROMIUM, true);
     } else {// legacy edge
       if (this.proxy_) {
         caps.set(Capability.PROXY, this.proxy_);
@@ -560,6 +553,7 @@ class Options {
       Object.keys(this.options_).forEach(function (key) {
         caps.set(key, this.options_[key]);
       }, this);
+      caps.set(CAPABILITY_KEY.USE_EDGE_CHROMIUM, false);
     }
     return caps;
   }
@@ -567,7 +561,7 @@ class Options {
   /**
    * Converts this instance to its JSON wire protocol representation. Note this
    * function is an implementation not intended for general use.
-   * @return {{pageLoadStrategy: (string|undefined)}}
+   * @return {!Object}
    *   The JSON wire protocol representation of this instance.
    */
   [Symbols.serialize]() {
@@ -603,27 +597,28 @@ class ServiceBuilder extends remote.DriverService.Builder {
    * @throws {Error} If provided executable does not exist, or the
    *   MicrosoftEdgeDriver cannot be found on the PATH.
    */
-  constructor(opt_exe, useEdgeChromium) {
-    let edgedriver_exe = useEdgeChromium ? EDGEDRIVER_CHROMIUM_EXE : EDGEDRIVER_LEGACY_EXE;
-    let exe = opt_exe || io.findInPath(edgedriver_exe, true);
+  constructor(opt_exe) {
+    let exe;
+    if (opt_exe){
+      if (fs.existsSync(opt_exe)){
+        exe = opt_exe;
+      } else {
+        exe = io.findInPath(opt_exe, true);
+      }
+    } else {
+      exe = io.findInPath(EDGEDRIVER_LEGACY_EXE, true);
+    }
     if (!exe) {
       throw Error(
-        'The ' + edgedriver_exe + ' could not be found on the current PATH. ' +
+        'The ' + EDGEDRIVER_LEGACY_EXE + ' could not be found on the current PATH. ' +
         'Please download the latest version of the MicrosoftEdgeDriver from ' +
-        'https://www.microsoft.com/en-us/download/details.aspx?id=48212 and ' +
+        'https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/ and ' +
         'ensure it can be found on your PATH.');
     }
 
     super(exe);
-    if (useEdgeChromium) {
-      this.setLoopback(true);  // Required for chromium edge
-    } else {
-      // Binding to the loopback address will fail if not running with
-      // administrator privileges. Since we cannot test for that in script
-      // (or can we?), force the DriverService to use "localhost".
-      this.setHostname('localhost');
-      this.options_.args.push('--jwp');
-    }
+    this.setLoopback(true);  // Required for chromium edge
+    this.options_.args.push('--jwp'); // Required for legacy edge
   }
 
   /**
@@ -677,7 +672,7 @@ class ServiceBuilder extends remote.DriverService.Builder {
 
 
 /** @type {remote.DriverService} */
-var defaultService = null;
+let defaultService = null;
 
 
 /**
@@ -701,10 +696,8 @@ function setDefaultService(service) {
  * for an MicrosoftEdgeDriver executable found on the system PATH.
  * @return {!remote.DriverService} The default MicrosoftEdgeDriver service.
  */
-function getDefaultService(useEdgeChromium) {
-  if (!defaultService) {
-    defaultService = new ServiceBuilder('', useEdgeChromium).build();
-  }
+function getDefaultService() {
+  defaultService = new ServiceBuilder().build();
   return defaultService;
 }
 
@@ -725,27 +718,27 @@ class Driver extends webdriver.WebDriver {
    * @return {!Driver} A new driver instance.
    */
   static createSession(opt_config, opt_service, opt_flow) {
-    let executor, service;
-    if (opt_config && opt_config.has('edgeOptions') &&
-      opt_config.get('edgeOptions').getEdgeChromium()) {// chromium edge
+    let executor, service, client, caps;
+    if (opt_config instanceof Options && opt_config.getEdgeChromium()) {// chromium edge
       let opt_serviceExecutor = opt_service;
       if (opt_serviceExecutor instanceof http.Executor) {
         executor = opt_serviceExecutor;
         configureExecutor(executor);
       } else {
-        service = opt_serviceExecutor || getDefaultService(true);
+        service = opt_serviceExecutor || getDefaultService();
         executor = createExecutor(service.start());
       }
     }
     else {// legacy edge
-      service = opt_service || getDefaultService(false);
-      let client = service.start().then(url => new http.HttpClient(url));
+      service = opt_service || getDefaultService();
+      client = service.start().then(url => new http.HttpClient(url));
       executor = new http.Executor(client);
     }
-    let caps = opt_config instanceof Options ? opt_config.toCapabilities() :
+
+    caps = opt_config instanceof Options ? opt_config.toCapabilities() :
       (opt_config || Capabilities.edge());
     return /** @type {!Driver} */(
-      super.createSession(executor, caps, opt_flow));
+      super.createSession(executor, caps, opt_flow, () => service.kill()));
   }
 
   /**

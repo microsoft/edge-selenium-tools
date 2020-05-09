@@ -353,3 +353,8 @@ MigrationBackup/
 py/build
 py/dist
 py/*.egg-info
+
+js/package-lock.json
+js/node-modules
+
+.vscode

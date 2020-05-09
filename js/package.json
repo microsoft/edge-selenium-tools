@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "mocha": "^7.1.2",
-    "selenium-webdriver": "^3.6.0",
-    "sleep": "^6.1.0"
+    "selenium-webdriver": "^3.6.0"
   }
 }
