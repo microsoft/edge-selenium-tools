@@ -4,7 +4,7 @@
     <TargetFrameworks>net45;net40;net35;netstandard2.0</TargetFrameworks>
     <Authors>Microsoft</Authors>
     <PackageId>Microsoft.Edge.SeleniumTools</PackageId>
-    <Version>3.141.0</Version>
+    <Version>3.141.1</Version>
     <Product>Selenium Tools for Microsoft Edge</Product>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
