@@ -81,13 +81,24 @@ const promise = require('selenium-webdriver/lib/promise');
 const Symbols = require('selenium-webdriver/lib/symbols');
 const webdriver = require('selenium-webdriver/lib/webdriver');
 const remote = require('selenium-webdriver/remote');
-const { Capabilities, Capability } = require('selenium-webdriver/lib/capabilities');
+const { Browser, Capabilities, Capability } = require('selenium-webdriver/lib/capabilities');
 const command = require('selenium-webdriver/lib/command');
 const logging = require('selenium-webdriver/lib/logging');
 
+const EDGE_CHROMIUM_BROWSER_NAME = "msedge";
 const EDGEDRIVER_LEGACY_EXE = 'MicrosoftWebDriver.exe';
 const EDGEDRIVER_CHROMIUM_EXE =
   process.platform === 'win32' ? 'msedgedriver.exe' : 'msedgedriver';
+
+function locateSynchronously(browserName) {
+  browserName = browserName || Browser.EDGE;
+  if (browserName === EDGE_CHROMIUM_BROWSER_NAME) {
+    return io.findInPath(EDGEDRIVER_CHROMIUM_EXE, true);
+  }
+
+  return process.platform === 'win32'
+      ? io.findInPath(EDGEDRIVER_LEGACY_EXE, true) : null;
+}
 
 
 /**
@@ -601,24 +612,15 @@ class ServiceBuilder extends remote.DriverService.Builder {
    *   MicrosoftEdgeDriver cannot be found on the PATH.
    */
   constructor(opt_exe) {
-    let exe;
-    if (opt_exe){
-      if (fs.existsSync(opt_exe)){
-        exe = opt_exe;
-      } else {
-        exe = io.findInPath(opt_exe, true);
-      }
-    } else {
-      exe = io.findInPath(EDGEDRIVER_LEGACY_EXE, true);
-    }
+    let exe = opt_exe || locateSynchronously();
     if (!exe) {
       throw Error(
-        'The ' + EDGEDRIVER_LEGACY_EXE + ' could not be found on the current PATH. ' +
+        'The WebDriver for Edge could not be found on the current PATH. ' +
         'Please download the latest version of the MicrosoftEdgeDriver from ' +
         'https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/ and ' +
         'ensure it can be found on your PATH.');
     }
-
+ 
     super(exe);
     this.setLoopback(true);  // Required for chromium edge
     this.options_.args.push('--jwp'); // Required for legacy edge
@@ -700,10 +702,19 @@ function setDefaultService(service) {
  * @return {!remote.DriverService} The default MicrosoftEdgeDriver service.
  */
 function getDefaultService() {
-  defaultService = new ServiceBuilder().build();
+  if (!defaultService) {
+    defaultService = new ServiceBuilder().build();
+  }
   return defaultService;
 }
 
+function createServiceFromCapabilities(options) {
+  let exe;
+  if (options instanceof Options && options.getEdgeChromium()){
+    exe = locateSynchronously(EDGE_CHROMIUM_BROWSER_NAME);
+  }
+  return new ServiceBuilder(exe).build();
+}
 
 /**
  * Creates a new WebDriver client for Microsoft's Edge.
@@ -723,17 +734,16 @@ class Driver extends webdriver.WebDriver {
   static createSession(opt_config, opt_service, opt_flow) {
     let executor, service, client, caps;
     if (opt_config instanceof Options && opt_config.getEdgeChromium()) {// chromium edge
-      let opt_serviceExecutor = opt_service;
-      if (opt_serviceExecutor instanceof http.Executor) {
-        executor = opt_serviceExecutor;
+      if (opt_service instanceof http.Executor) {
+        executor = opt_service;
         configureExecutor(executor);
       } else {
-        service = opt_serviceExecutor || getDefaultService();
+        service = opt_service || createServiceFromCapabilities(opt_config);
         executor = createExecutor(service.start());
       }
     }
     else {// legacy edge
-      service = opt_service || getDefaultService();
+      service = opt_service || createServiceFromCapabilities(opt_config);
       client = service.start().then(url => new http.HttpClient(url));
       executor = new http.Executor(client);
     }

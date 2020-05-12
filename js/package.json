@@ -1,13 +1,13 @@
 {
-  "name": "js",
-  "version": "1.0.0",
+  "name": "edge-selenium-tools",
+  "version": "3.141.0",
   "description": "",
-  "main": "index.js",
+  "main": "edge.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --debug-brk"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
