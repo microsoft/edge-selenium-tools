@@ -100,7 +100,6 @@ function locateSynchronously(browserName) {
       ? io.findInPath(EDGEDRIVER_LEGACY_EXE, true) : null;
 }
 
-
 /**
  * Option keys.
  * @enum {string}
@@ -109,6 +108,22 @@ const CAPABILITY_KEY = {
   PAGE_LOAD_STRATEGY: 'pageLoadStrategy',
   USE_EDGE_CHROMIUM: 'ms:edgeChromium'
 };
+
+function useEdgeChromium(o) {
+  if (o instanceof Options){
+    return o.getEdgeChromium();
+  }
+  
+  if (o instanceof Capabilities) {
+    return !!o.get(CAPABILITY_KEY.USE_EDGE_CHROMIUM);
+  }
+
+  if (o && typeof o === 'object') {
+    return !!o[CAPABILITY_KEY.USE_EDGE_CHROMIUM];
+  }
+
+  return false;
+}
 
 /**
  * Custom command names supported by EdgeDriver.
@@ -710,7 +725,7 @@ function getDefaultService() {
 
 function createServiceFromCapabilities(options) {
   let exe;
-  if (options instanceof Options && options.getEdgeChromium()){
+  if (useEdgeChromium(options)){
     exe = locateSynchronously(EDGE_CHROMIUM_BROWSER_NAME);
   }
   return new ServiceBuilder(exe).build();
@@ -733,7 +748,7 @@ class Driver extends webdriver.WebDriver {
    */
   static createSession(opt_config, opt_service, opt_flow) {
     let executor, service, client, caps;
-    if (opt_config instanceof Options && opt_config.getEdgeChromium()) {// chromium edge
+    if (useEdgeChromium(opt_config)) {// chromium edge
       if (opt_service instanceof http.Executor) {
         executor = opt_service;
         configureExecutor(executor);
