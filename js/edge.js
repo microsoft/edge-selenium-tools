@@ -109,6 +109,10 @@ const CAPABILITY_KEY = {
   USE_EDGE_CHROMIUM: 'ms:edgeChromium'
 };
 
+/**
+ * @param  {(Options|Capabilities|Object<string, *>)=} o The options object
+ * @return {boolean}
+ */
 function useEdgeChromium(o) {
   if (o instanceof Options){
     return o.getEdgeChromium();
