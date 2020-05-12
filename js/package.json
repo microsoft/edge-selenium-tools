@@ -1,0 +1,18 @@
+{
+  "name": "edge-selenium-tools",
+  "version": "3.141.0",
+  "description": "",
+  "main": "edge.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^7.1.2",
+    "selenium-webdriver": "^3.6.0"
+  }
+}
