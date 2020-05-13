@@ -75,7 +75,7 @@
 
 const fs = require('fs');
 const http = require('selenium-webdriver/http');
-const  io = require('selenium-webdriver/io');
+const io = require('selenium-webdriver/io');
 const capabilities = require('selenium-webdriver/lib/capabilities');
 const promise = require('selenium-webdriver/lib/promise');
 const Symbols = require('selenium-webdriver/lib/symbols');
@@ -97,7 +97,7 @@ function locateSynchronously(browserName) {
   }
 
   return process.platform === 'win32'
-      ? io.findInPath(EDGEDRIVER_LEGACY_EXE, true) : null;
+    ? io.findInPath(EDGEDRIVER_LEGACY_EXE, true) : null;
 }
 
 /**
@@ -114,10 +114,10 @@ const CAPABILITY_KEY = {
  * @return {boolean}
  */
 function useEdgeChromium(o) {
-  if (o instanceof Options){
+  if (o instanceof Options) {
     return o.getEdgeChromium();
   }
-  
+
   if (o instanceof Capabilities) {
     return !!o.get(CAPABILITY_KEY.USE_EDGE_CHROMIUM);
   }
@@ -639,7 +639,7 @@ class ServiceBuilder extends remote.DriverService.Builder {
         'https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/ and ' +
         'ensure it can be found on your PATH.');
     }
- 
+
     super(exe);
     this.setLoopback(true);  // Required for chromium edge
     this.options_.args.push('--jwp'); // Required for legacy edge
@@ -729,7 +729,7 @@ function getDefaultService() {
 
 function createServiceFromCapabilities(options) {
   let exe;
-  if (useEdgeChromium(options)){
+  if (useEdgeChromium(options)) {
     exe = locateSynchronously(EDGE_CHROMIUM_BROWSER_NAME);
   }
   return new ServiceBuilder(exe).build();
