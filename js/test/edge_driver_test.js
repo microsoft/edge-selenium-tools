@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License. 
 const assert = require('assert');
-const edge = require("../edge");
+const edge = require("../lib/edge");
 
 describe('JS selenium binding tests', function () {
-    this.timeout(10000);
+    this.timeout(0);
 
     it('test default', async function () {
         let driver = await edge.Driver.createSession();

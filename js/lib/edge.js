@@ -73,7 +73,6 @@
 
 'use strict';
 
-const fs = require('fs');
 const http = require('selenium-webdriver/http');
 const io = require('selenium-webdriver/io');
 const capabilities = require('selenium-webdriver/lib/capabilities');
