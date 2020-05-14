@@ -727,11 +727,11 @@ function getDefaultService() {
 }
 
 function createServiceFromCapabilities(options) {
-  let exe;
   if (useEdgeChromium(options)) {
-    exe = locateSynchronously(EDGE_CHROMIUM_BROWSER_NAME);
+    let exe = locateSynchronously(EDGE_CHROMIUM_BROWSER_NAME);
+    return new ServiceBuilder(exe).build();
   }
-  return new ServiceBuilder(exe).build();
+  return getDefaultService();
 }
 
 /**
@@ -750,7 +750,10 @@ class Driver extends webdriver.WebDriver {
    * @return {!Driver} A new driver instance.
    */
   static createSession(opt_config, opt_service, opt_flow) {
-    let executor, service, client, caps;
+    let caps = opt_config instanceof Options ? opt_config.toCapabilities() :
+    (opt_config || Capabilities.edge());
+
+    let executor, service, client;
     if (useEdgeChromium(opt_config)) {// chromium edge
       if (opt_service instanceof http.Executor) {
         executor = opt_service;
@@ -759,15 +762,12 @@ class Driver extends webdriver.WebDriver {
         service = opt_service || createServiceFromCapabilities(opt_config);
         executor = createExecutor(service.start());
       }
-    }
-    else {// legacy edge
+    } else { // legacy edge
       service = opt_service || createServiceFromCapabilities(opt_config);
       client = service.start().then(url => new http.HttpClient(url));
       executor = new http.Executor(client);
     }
 
-    caps = opt_config instanceof Options ? opt_config.toCapabilities() :
-      (opt_config || Capabilities.edge());
     return /** @type {!Driver} */(
       super.createSession(executor, caps, opt_flow, () => service.kill()));
   }
