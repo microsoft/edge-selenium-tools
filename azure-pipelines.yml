@@ -51,6 +51,19 @@ steps:
       *.whl
     targetFolder: '$(Build.ArtifactStagingDirectory)\py'
 
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'pack'
+    workingDir: 'js'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'js'
+    contents: |
+      *.tgz
+    targetFolder: '$(Build.ArtifactStagingDirectory)\js'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
