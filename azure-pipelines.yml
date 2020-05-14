@@ -33,14 +33,6 @@ steps:
     contents: '*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet'
 
-- task: CopyFiles@2
-  inputs:
-    contents: |
-      LICENSE
-      README.md
-    targetFolder: 'py'
-  displayName: 'Copy license and readme to python package'
-
 - script: |
     python -m pip install --upgrade pip setuptools wheel
   workingDirectory: 'py'
@@ -58,6 +50,19 @@ steps:
       *.tar.gz
       *.whl
     targetFolder: '$(Build.ArtifactStagingDirectory)\py'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'pack'
+    workingDir: 'js'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'js'
+    contents: |
+      *.tgz
+    targetFolder: '$(Build.ArtifactStagingDirectory)\js'
 
 - task: PublishBuildArtifacts@1
   inputs:

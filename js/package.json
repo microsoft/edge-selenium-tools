@@ -1,18 +1,39 @@
 {
-  "name": "edge-selenium-tools",
-  "version": "3.141.0",
-  "description": "",
-  "main": "edge.js",
+  "name": "@microsoft/edge-selenium-tools",
+  "version": "3.6.0",
+  "description": "An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).",
+  "keywords": [
+    "automation",
+    "selenium",
+    "testing",
+    "webdriver",
+    "webdriverjs",
+    "microsoft",
+    "chromium",
+    "edge"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/edge-selenium-tools"
+  },
+  "author": "Microsoft Corporation",
+  "license": "Apache-2.0",
+  "main": "./lib/edge.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "lib/**/*.js",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
-    "mocha": "^7.1.2",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "3.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.2"
   }
 }

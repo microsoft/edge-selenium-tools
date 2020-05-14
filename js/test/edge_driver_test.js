@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License. 
 const assert = require('assert');
-const edge = require("../edge");
+const edge = require("../lib/edge");
 
-describe('JS selenium binding tests', function() {
-    this.timeout(10000);
+describe('JS selenium binding tests', function () {
+    this.timeout(0);
 
-    it('test default', async function(){
+    it('test default', async function () {
         let driver = await edge.Driver.createSession();
 
         let cap = await driver.getCapabilities();
         await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
-        
+
         await driver.quit();
     });
 
-    it('test legacy edge', async function(){
+    it('test legacy edge', async function () {
         let options = await new edge.Options().setEdgeChromium(false);
         let driver = await edge.Driver.createSession(options);
 
         let cap = await driver.getCapabilities();
         await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
-        
+
         await driver.quit();
     });
 
-    it('test chromium edge', async function(){
+    it('test chromium edge', async function () {
         let options = await new edge.Options().setEdgeChromium(true);
         let driver = await edge.Driver.createSession(options);
 
@@ -46,7 +46,7 @@ describe('JS selenium binding tests', function() {
         await driver.quit();
     });
 
-    it('test legacy options to capabilities', async function(){
+    it('test legacy options to capabilities', async function () {
         let options = await new edge.Options();
         let cap = await options.toCapabilities();
         await assert.equal(cap.get('browserName'), 'MicrosoftEdge');
@@ -55,7 +55,7 @@ describe('JS selenium binding tests', function() {
         await assert.equal(cap.get('ms:edgeChromium'), false);
     });
 
-    it('test chromium options to capabilities', async function(){
+    it('test chromium options to capabilities', async function () {
         let options = await new edge
             .Options()
             .setEdgeChromium(true);
