@@ -78,10 +78,10 @@ let driver = edge.Driver.createSession(options);
 ```python
 from msedge.selenium_tools import Edge, EdgeOptions
 
-// Launch Microsoft Edge (EdgeHTML)
+# Launch Microsoft Edge (EdgeHTML)
 driver = Edge()
 
-// Launch Microsoft Edge (Chromium)
+# Launch Microsoft Edge (Chromium)
 options = EdgeOptions()
 options.use_chromium = True
 driver = Edge(options = options)
