@@ -33,14 +33,6 @@ steps:
     contents: '*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet'
 
-- task: CopyFiles@2
-  inputs:
-    contents: |
-      LICENSE
-      README.md
-    targetFolder: 'py'
-  displayName: 'Copy license and readme to python package'
-
 - script: |
     python -m pip install --upgrade pip setuptools wheel
   workingDirectory: 'py'

@@ -25,6 +25,11 @@
   "scripts": {
     "test": "mocha"
   },
+  "files": [
+    "lib/**/*.js",
+    "README.md",
+    "LICENSE.md"
+  ],
   "dependencies": {
     "selenium-webdriver": "3.6.0"
   },
