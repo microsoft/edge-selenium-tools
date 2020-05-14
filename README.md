@@ -8,7 +8,6 @@ The libraries included in this project are fully compatible with Selenium's buil
 
 The classes in this package are based on the existing ``Edge`` and ``Chrome`` driver classes included in the [Selenium](https://github.com/SeleniumHQ/selenium) project.
 
-
 ## Before you Begin
 
 The Selenium Tools for Microsoft Edge is a solution for developers who prefer to remain on Selenium 3 which is the current stable release and developers who have existing browser tests and want to add coverage for the new Microsoft Edge (Chromium) browser without changing the Selenium version.
@@ -21,7 +20,6 @@ The very same ``Edge`` driver classes provided in this package are included in S
 
 You will need the correct [WebDriver executable][webdriver-download] for the version of Microsoft Edge you want to drive. The executables are not included with this package. WebDriver executables for all supported versions of Microsoft Edge are available for download [here][webdriver-download]. For more information, and instructions on downloading the correct driver for your browser, see the [Microsoft Edge WebDriver documentation][webdriver-chromium-docs].
 
-
 ### Installation
 
 Selenium Tools for Microsoft Edge depends on the official Selenium 3 package to run. You will need to ensure that both Selenium 3 and the Tools and included in your project.
@@ -29,6 +27,12 @@ Selenium Tools for Microsoft Edge depends on the official Selenium 3 package to 
 #### C#
 
 Add the [Microsoft.Edge.SeleniumTools](https://www.nuget.org/packages/Microsoft.Edge.SeleniumTools) and [Selenium.WebDriver](https://www.nuget.org/packages/Selenium.WebDriver/3.141.0) packages to your .NET project using the NuGet CLI or Visual Studio.
+
+#### JavaScript
+
+```
+npm install @microsoft/edge-selenium-tools
+```
 
 #### Python
 
@@ -56,9 +60,22 @@ options.UseChromium = true;
 var driver = new EdgeDriver(options);
 ```
 
+### JavaScript
+
+```js
+const edge = require("@microsoft/edge-selenium-tools");
+
+// Launch Microsoft Edge (EdgeHTML)
+let driver = edge.Driver.createSession();
+
+// Launch Microsoft Edge (Chromium)
+let options = new edge.Options().setEdgeChromium(true);
+let driver = edge.Driver.createSession(options);
+```
+
 ### Python
 
-```csharp
+```python
 from msedge.selenium_tools import Edge, EdgeOptions
 
 // Launch Microsoft Edge (EdgeHTML)
