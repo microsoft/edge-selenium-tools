@@ -91,7 +91,8 @@ namespace Microsoft.Edge.SeleniumTools
         /// </summary>
         public static readonly string Capability = "ms:edgeOptions";
 
-        private const string BrowserNameValue = "MicrosoftEdge";
+        private const string DefaultBrowserNameValue = "MicrosoftEdge";
+        private const string WebViewBrowserNameValue = "webview2";
 
         // Engine switching
         private const string UseChromiumCapability = "ms:edgeChromium";
@@ -144,7 +145,7 @@ namespace Microsoft.Edge.SeleniumTools
 
         public EdgeOptions() : base()
         {
-            this.BrowserName = BrowserNameValue;
+            this.BrowserName = DefaultBrowserNameValue;
             this.AddKnownCapabilityName(EdgeOptions.Capability, "current EdgeOptions class instance");
             this.AddKnownCapabilityName(CapabilityType.LoggingPreferences, "SetLoggingPreference method");
             this.AddKnownCapabilityName(EdgeOptions.ArgumentsEdgeOption, "AddArguments method");
@@ -162,10 +163,22 @@ namespace Microsoft.Edge.SeleniumTools
             this.AddKnownCapabilityName(EdgeOptions.UseSpecCompliantProtocolOption, "UseSpecCompliantProtocol property");
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to launch Edge Chromium. Defaults to using Edge Legacy.
+        /// </summary>
         public bool UseChromium
         {
             get { return this.useChromium; }
             set { this.useChromium = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to create a WebView session used for launching an Edge (Chromium) WebView-based app on desktop.
+        /// </summary>
+        public bool UseWebView
+        {
+            get { return this.BrowserName == WebViewBrowserNameValue; }
+            set { this.BrowserName = value ? WebViewBrowserNameValue : DefaultBrowserNameValue; }
         }
 
         /// <summary>

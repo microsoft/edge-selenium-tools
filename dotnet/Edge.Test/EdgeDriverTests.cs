@@ -195,5 +195,13 @@ namespace Edge.Test
             Assert.AreEqual(true, capabilities.GetCapability("ms:inPrivate"));
             Assert.IsFalse(capabilities.HasCapability("ms:edgeOptions"));
         }
+
+        [TestMethod]
+        public void TestWebViewOptions()
+        {
+            var options = new EdgeOptions();
+            options.UseWebView = true;
+            Assert.AreEqual("webview2", options.BrowserName);
+        }
     }
 }
