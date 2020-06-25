@@ -85,6 +85,7 @@ const command = require('selenium-webdriver/lib/command');
 const logging = require('selenium-webdriver/lib/logging');
 
 const EDGE_CHROMIUM_BROWSER_NAME = "msedge";
+const WEBVIEW_BROWSER_NAME = "webview2";
 const EDGEDRIVER_LEGACY_EXE = 'MicrosoftWebDriver.exe';
 const EDGEDRIVER_CHROMIUM_EXE =
   process.platform === 'win32' ? 'msedgedriver.exe' : 'msedgedriver';
@@ -189,6 +190,7 @@ class Options {
     this.proxy_ = null;
 
     this.useEdgeChromium_ = false;
+    this.useWebView_ = false;
   }
 
   setEdgeChromium(useEdgeChromium) {
@@ -198,6 +200,14 @@ class Options {
 
   getEdgeChromium() {
     return this.useEdgeChromium_;
+  }
+
+  setUseWebView(useWebView) {
+    this.useWebView_ = useWebView;
+  }
+
+  getUseWebView() {
+    return this.useWebView_;
   }
 
   /**
@@ -233,6 +243,11 @@ class Options {
           caps.get(Capability.LOGGING_PREFS));
       }
       options.setEdgeChromium(true);
+
+      if (caps.get(Capability.BROWSER_NAME) == WEBVIEW_BROWSER_NAME) {
+        options.setUseWebView(true);
+      }
+
     } else {// legacy edge
       let map = options.options_;
 
@@ -578,6 +593,9 @@ class Options {
         set(Capability.LOGGING_PREFS, this.logPrefs_).
         set(OPTIONS_CAPABILITY_KEY, this).
         set(CAPABILITY_KEY.USE_EDGE_CHROMIUM, true);
+      if (this.getUseWebView()) {
+        caps.set(Capability.BROWSER_NAME, WEBVIEW_BROWSER_NAME);
+      }
     } else {// legacy edge
       if (this.proxy_) {
         caps.set(Capability.PROXY, this.proxy_);

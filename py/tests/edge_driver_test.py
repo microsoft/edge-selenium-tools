@@ -106,5 +106,13 @@ class EdgeDriverTest(unittest.TestCase):
         self.assertFalse('ms:edgeOptions' in cap)
         self.assertFalse(cap['ms:edgeChromium'])
 
+    def test_webview_options_to_capabilities(self):
+        options = EdgeOptions()
+        options.use_chromium = True
+        options.use_webview = True
+
+        cap = options.to_capabilities()
+        self.assertEqual('webview2', cap['browserName'])
+
 if __name__=='__main__':
     unittest.main()

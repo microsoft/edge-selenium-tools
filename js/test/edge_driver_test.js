@@ -66,5 +66,13 @@ describe('JS selenium binding tests', function () {
         await assert.equal(cap.has('ms:edgeChromium'), true);
         await assert.equal(cap.get('ms:edgeChromium'), true);
     });
+
+    it('test webview options', function() {
+        let options = new edge.Options();
+        options.setEdgeChromium(true);
+        options.setUseWebView(true);
+        let cap = options.toCapabilities();
+        assert.equal(cap.get('browserName'), 'webview2');
+    });
 });
 

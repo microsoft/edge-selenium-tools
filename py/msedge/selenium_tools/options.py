@@ -39,6 +39,7 @@ class Options(object):
         self._debugger_address = None
         self._caps = DesiredCapabilities.EDGE.copy()
         self._use_chromium = False
+        self._use_webview = False
     
     @property
     def use_chromium(self):
@@ -47,6 +48,14 @@ class Options(object):
     @use_chromium.setter
     def use_chromium(self, value):
         self._use_chromium = bool(value)
+
+    @property
+    def use_webview(self):
+        return self._use_webview
+
+    @use_webview.setter
+    def use_webview(self, value):
+        self._use_webview = bool(value)
 
     @property
     def page_load_strategy(self):
@@ -74,6 +83,8 @@ class Options(object):
         """
         if self.use_chromium:
             caps = self._caps
+            if self._use_webview:
+                caps['browserName'] = 'webview2'
             edge_options = self.experimental_options.copy()
             edge_options["extensions"] = self.extensions
             if self.binary_location:
