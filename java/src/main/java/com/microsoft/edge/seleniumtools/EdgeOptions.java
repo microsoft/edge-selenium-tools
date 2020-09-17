@@ -80,6 +80,8 @@ public class EdgeOptions extends MutableCapabilities {
     public static final String CAPABILITY = "ms:edgeOptions";
     public static final String USE_CHROMIUM = "ms:edgeChromium";
 
+    private static final String WEBVIEW_BROWSER_NAME = "webview2";
+
     private String binary;
     private List<String> args = new ArrayList<>();
     private List<File> extensionFiles = new ArrayList<>();
@@ -88,11 +90,23 @@ public class EdgeOptions extends MutableCapabilities {
 
     public EdgeOptions() {
         setCapability(CapabilityType.BROWSER_NAME, BrowserType.EDGE);
+        setCapability(USE_CHROMIUM, true);
     }
 
     @Override
     public EdgeOptions merge(Capabilities extraCapabilities) {
         super.merge(extraCapabilities);
+        return this;
+    }
+
+    /**
+     * Sets whether to launch an Edge (Chromium) WebView executable instead of
+     * launching the Edge browser.
+     *
+     * @param useWebView Whether to launch a WebView executable.
+     */
+    public EdgeOptions setUseWebView(boolean useWebView) {
+        setCapability(CapabilityType.BROWSER_NAME, useWebView ? WEBVIEW_BROWSER_NAME : BrowserType.EDGE);
         return this;
     }
 
@@ -296,6 +310,7 @@ public class EdgeOptions extends MutableCapabilities {
                 ).collect(ImmutableList.toImmutableList()));
 
         toReturn.put(CAPABILITY, options);
+        toReturn.put(USE_CHROMIUM, true);
 
         return Collections.unmodifiableMap(toReturn);
     }
