@@ -1,7 +1,6 @@
 package com.microsoft.edge.seleniumtools;
 
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Capabilities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
