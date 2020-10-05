@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Edge.SeleniumTool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Edge.SeleniumTools.Test", "Edge.Test\Microsoft.Edge.SeleniumTools.Test.csproj", "{ED6B9F74-7228-44CD-8F1E-B1E5329AFC1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Edge.SeleniumTools.StrongNamed", "Microsoft.Edge.SeleniumTools.StrongNamed\Microsoft.Edge.SeleniumTools.StrongNamed.csproj", "{777E682A-238F-4C1F-BE09-9B0E8B560285}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ED6B9F74-7228-44CD-8F1E-B1E5329AFC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED6B9F74-7228-44CD-8F1E-B1E5329AFC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED6B9F74-7228-44CD-8F1E-B1E5329AFC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{777E682A-238F-4C1F-BE09-9B0E8B560285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{777E682A-238F-4C1F-BE09-9B0E8B560285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{777E682A-238F-4C1F-BE09-9B0E8B560285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{777E682A-238F-4C1F-BE09-9B0E8B560285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
