@@ -13,6 +13,8 @@ steps:
     $OutFile = "$env:PIPELINE_WORKSPACE/$SeleniumWebDriverZip"
     Invoke-WebRequest $SeleniumWebDriverDownloadUrl -OutFile $OutFile
     Expand-Archive $OutFile
+    Write-Host "Extracting $OutFile"
+    ls $env:PIPELINE_WORKSPACE
   displayName: download Selenium WebDriver strong-named package
 
 - task: NuGetCommand@2
