@@ -39,9 +39,15 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: 'dotnet\Edge\bin\Release'
+    sourceFolder: 'dotnet\Microsoft.Edge.SeleniumTools\bin\Release'
     contents: '*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'dotnet\Microsoft.Edge.SeleniumTools.StrongNamed\bin\Release'
+    contents: '*.nupkg'
+    targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet-strongnamed'
 
 - script: |
     python -m pip install --upgrade pip setuptools wheel
