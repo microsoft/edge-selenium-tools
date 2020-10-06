@@ -60,7 +60,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Edge\Microsoft.Edge.SeleniumTools.csproj">
+    <ProjectReference Include="..\Microsoft.Edge.SeleniumTools\Microsoft.Edge.SeleniumTools.csproj">
       <Project>{341F7687-6C2A-41AE-99F1-6D9A0322422A}</Project>
       <Name>Microsoft.Edge.SeleniumTools</Name>
     </ProjectReference>
