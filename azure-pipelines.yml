@@ -12,8 +12,8 @@ steps:
     $SeleniumWebDriverDownloadUrl = "http://selenium-release.storage.googleapis.com/3.141/$SeleniumWebDriverZip"
     $OutFile = "$env:PIPELINE_WORKSPACE/$SeleniumWebDriverZip"
     Invoke-WebRequest $SeleniumWebDriverDownloadUrl -OutFile $OutFile
-    Expand-Archive $OutFile
     Write-Host "Extracting $OutFile"
+    Expand-Archive $OutFile -DestinationPath "$env:PIPELINE_WORKSPACE/$SeleniumWebDriver"
     ls $env:PIPELINE_WORKSPACE
   displayName: download Selenium WebDriver strong-named package
 
