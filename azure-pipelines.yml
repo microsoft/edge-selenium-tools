@@ -6,6 +6,19 @@ steps:
   inputs:
     versionSpec: 
 
+- powershell: |
+    $SeleniumWebDriver = "selenium-dotnet-strongnamed-3.141.0"
+    $SeleniumWebDriverZip = "$SeleniumWebDriver.zip"
+    $SeleniumWebDriverDownloadUrl = "http://selenium-release.storage.googleapis.com/3.141/$SeleniumWebDriverZip"
+    Invoke-WebRequest $SeleniumWebDriverDownloadUrl -OutFile "$env:PIPELINE_WORKSPACE/$SeleniumWebDriverZip"
+    Expand-Archive $SeleniumWebDriverZip
+  displayName: download Selenium WebDriver strong-named package
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'custom'
+    arguments: 'nuget sources add -Name Selenium -Source $(Pipeline.Workspace)/selenium-dotnet-strongnamed-3.141.0/dist'
+
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
