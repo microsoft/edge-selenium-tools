@@ -19,6 +19,8 @@ steps:
   inputs:
     command: 'restore'
     restoreSolution: '**/*.sln'
+    feedsToUse: 'config'
+    nugetConfigPath: 'dotnet/nuget.config'
 
 - task: VSBuild@1
   inputs:
