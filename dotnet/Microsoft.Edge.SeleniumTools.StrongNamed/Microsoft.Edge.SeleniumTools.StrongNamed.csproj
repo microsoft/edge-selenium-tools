@@ -20,13 +20,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Edge\AssemblyInfo.cs" Link="AssemblyInfo.cs" />
-    <Compile Include="..\Edge\EdgeDriver.cs" Link="EdgeDriver.cs" />
-    <Compile Include="..\Edge\EdgeDriverService.cs" Link="EdgeDriverService.cs" />
-    <Compile Include="..\Edge\EdgeMobileEmulationDeviceSettings.cs" Link="EdgeMobileEmulationDeviceSettings.cs" />
-    <Compile Include="..\Edge\EdgeNetworkConditions.cs" Link="EdgeNetworkConditions.cs" />
-    <Compile Include="..\Edge\EdgeOptions.cs" Link="EdgeOptions.cs" />
-    <Compile Include="..\Edge\EdgePerformanceLoggingPreferences.cs" Link="EdgePerformanceLoggingPreferences.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\AssemblyInfo.cs" Link="AssemblyInfo.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\EdgeDriver.cs" Link="EdgeDriver.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\EdgeDriverService.cs" Link="EdgeDriverService.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\EdgeMobileEmulationDeviceSettings.cs" Link="EdgeMobileEmulationDeviceSettings.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\EdgeNetworkConditions.cs" Link="EdgeNetworkConditions.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\EdgeOptions.cs" Link="EdgeOptions.cs" />
+    <Compile Include="..\Microsoft.Edge.SeleniumTools\EdgePerformanceLoggingPreferences.cs" Link="EdgePerformanceLoggingPreferences.cs" />
   </ItemGroup>
 
   <ItemGroup>
