@@ -18,7 +18,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'custom'
-    arguments: 'nuget sources add -Name Selenium -Source $(Pipeline.Workspace)/selenium-dotnet-strongnamed-3.141.0/dist'
+    arguments: 'sources add -Name Selenium -Source $(Pipeline.Workspace)/selenium-dotnet-strongnamed-3.141.0/dist'
 
 - task: NuGetCommand@2
   inputs:
