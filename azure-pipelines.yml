@@ -6,11 +6,21 @@ steps:
   inputs:
     versionSpec: 
 
+- powershell: |
+    $SeleniumWebDriver = "selenium-dotnet-strongnamed-3.141.0"
+    $SeleniumWebDriverZip = "$SeleniumWebDriver.zip"
+    $SeleniumWebDriverDownloadUrl = "http://selenium-release.storage.googleapis.com/3.141/$SeleniumWebDriverZip"
+    $OutFile = "$env:PIPELINE_WORKSPACE/$SeleniumWebDriverZip"
+    Invoke-WebRequest $SeleniumWebDriverDownloadUrl -OutFile $OutFile
+    Expand-Archive $OutFile -DestinationPath "$env:PIPELINE_WORKSPACE/$SeleniumWebDriver"
+  displayName: download Selenium WebDriver strong-named package
+
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
     restoreSolution: '**/*.sln'
-    feedsToUse: 'select'
+    feedsToUse: 'config'
+    nugetConfigPath: 'dotnet/nuget.config'
 
 - task: VSBuild@1
   inputs:
@@ -29,9 +39,15 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: 'dotnet\Edge\bin\Release'
+    sourceFolder: 'dotnet\Microsoft.Edge.SeleniumTools\bin\Release'
     contents: '*.nupkg'
     targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet'
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: 'dotnet\Microsoft.Edge.SeleniumTools.StrongNamed\bin\Release'
+    contents: '*.nupkg'
+    targetFolder: '$(Build.ArtifactStagingDirectory)\dotnet-strongnamed'
 
 - script: |
     python -m pip install --upgrade pip setuptools wheel
