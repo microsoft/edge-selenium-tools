@@ -55,7 +55,9 @@ class WebDriver(RemoteWebDriver):
          """
 
         use_chromium = False
-        if options and options.use_chromium:
+        if (options and options.use_chromium) or \
+            (desired_capabilities and 'ms:edgeChromium' in desired_capabilities \
+                and desired_capabilities['ms:edgeChromium']):
             use_chromium = True
 
         if keep_alive is None:
