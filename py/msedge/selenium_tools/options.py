@@ -238,8 +238,10 @@ class Options(object):
         if platform.system().lower() == 'windows':
             args.add('--disable-gpu')
         if value is True:
+            self._use_chromium = True
             self._arguments.extend(args)
         else:
+            self._use_chromium = False
             self._arguments = list(set(self._arguments) - args)
 
     def set_headless(self, headless=True):
