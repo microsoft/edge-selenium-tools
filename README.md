@@ -60,6 +60,17 @@ options.UseChromium = true;
 var driver = new EdgeDriver(options);
 ```
 
+### Java
+
+Import `EdgeDriver` from the `com.microsoft.edge.seleniumtools` package to launch Microsoft Edge (Chromium). The `com.microsoft.edge.seleniumtools` package supports **Chromium** only. Use the official Selenium 3 package `org.openqa.selenium.edge` to launch **EdgeHTML**.
+
+```java
+import com.microsoft.edge.seleniumtools.EdgeDriver;
+
+// Launch Microsoft Edge (Chromium)
+EdgeDriver driver = new EdgeDriver();
+```
+
 ### JavaScript
 
 ```js
