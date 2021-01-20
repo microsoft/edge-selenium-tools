@@ -34,6 +34,22 @@ Add the [Microsoft.Edge.SeleniumTools](https://www.nuget.org/packages/Microsoft.
 npm install @microsoft/edge-selenium-tools
 ```
 
+#### Java
+
+Add [msedge-selenium-tools-java](https://search.maven.org/search?q=a:msedge-selenium-tools-java) to your project using Maven:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.microsoft.edge</groupId>
+        <artifactId>msedge-selenium-tools-java</artifactId>
+        <version>3.141.0</version>
+    </dependency>
+</dependencies>
+```
+
+The Java package is also available for donwload on the [Releases](https://github.com/microsoft/edge-selenium-tools/releases/latest) page.
+
 #### Python
 
 Use pip to install the [msedge-selenium-tools](https://pypi.org/project/msedge-selenium-tools/) and [selenium](https://pypi.org/project/selenium/3.141.0/) packages:
