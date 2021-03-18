@@ -48,7 +48,7 @@ Add [msedge-selenium-tools-java](https://search.maven.org/search?q=a:msedge-sele
 </dependencies>
 ```
 
-The Java package is also available for donwload on the [Releases](https://github.com/microsoft/edge-selenium-tools/releases/latest) page.
+The Java package is also available for download on the [Releases](https://github.com/microsoft/edge-selenium-tools/releases/latest) page.
 
 #### Python
 
