@@ -186,6 +186,9 @@ class Options {
     /** @private {?logging.Preferences} */
     this.logPrefs_ = null;
 
+    /** @private {?string} */
+    this.pageLoadStrategy_ = null;
+    
     /** @private {?capabilities.ProxyConfig} */
     this.proxy_ = null;
 
@@ -378,9 +381,8 @@ class Options {
    * @return {!Options} A self reference.
    */
   setPageLoadStrategy(pageLoadStrategy) {
-    this.options_[CAPABILITY_KEY.PAGE_LOAD_STRATEGY] =
-      pageLoadStrategy.toLowerCase();
-    return this;
+    this.pageLoadStrategy_ = pageLoadStrategy.toLowerCase();
+    return this
   }
 
   /**
@@ -592,6 +594,7 @@ class Options {
         set(Capability.PROXY, this.proxy_).
         set(Capability.LOGGING_PREFS, this.logPrefs_).
         set(OPTIONS_CAPABILITY_KEY, this).
+        set(CAPABILITY_KEY.PAGE_LOAD_STRATEGY, this.pageLoadStrategy_).
         set(CAPABILITY_KEY.USE_EDGE_CHROMIUM, true);
       if (this.getUseWebView()) {
         caps.set(Capability.BROWSER_NAME, WEBVIEW_BROWSER_NAME);
@@ -603,6 +606,7 @@ class Options {
       Object.keys(this.options_).forEach(function (key) {
         caps.set(key, this.options_[key]);
       }, this);
+      caps.set(CAPABILITY_KEY.PAGE_LOAD_STRATEGY, this.pageLoadStrategy_);
       caps.set(CAPABILITY_KEY.USE_EDGE_CHROMIUM, false);
     }
     return caps;
