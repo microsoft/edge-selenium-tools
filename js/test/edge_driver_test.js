@@ -17,7 +17,7 @@ const edge = require("../lib/edge");
 describe('JS selenium binding tests', function () {
     this.timeout(0);
 
-    it('test default', async function () {
+    it.skip('test default', async function () {
         let driver = await edge.Driver.createSession();
 
         let cap = await driver.getCapabilities();
@@ -26,7 +26,7 @@ describe('JS selenium binding tests', function () {
         await driver.quit();
     });
 
-    it('test legacy edge', async function () {
+    it.skip('test legacy edge', async function () {
         let options = await new edge.Options().setEdgeChromium(false);
         let driver = await edge.Driver.createSession(options);
 

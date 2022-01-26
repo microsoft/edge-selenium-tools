@@ -761,6 +761,21 @@ function createServiceFromCapabilities(options) {
  */
 class Driver extends webdriver.WebDriver {
   /**
+   * @param {!(Session|IThenable<!Session>)} session Either a known session or a
+   *     promise that will be resolved to a session.
+   * @param {!command.Executor} executor The executor to use when sending
+   *     commands to the browser.
+   * @param {promise.ControlFlow=} opt_flow The flow to
+   *     schedule commands through. Defaults to the active flow object.
+   * @param {(function(this: void): ?)=} opt_onQuit A function to call, if any,
+   *     when the session is terminated.
+   */
+  constructor(session, executor, opt_flow, opt_onQuit) {
+    super(session, executor, opt_flow, opt_onQuit);
+    console.warn('Selenium Tools for Microsoft Edge is deprecated. Please upgrade to Selenium 4 which has built-in support for Microsoft Edge (Chromium): https://docs.microsoft.com/en-us/microsoft-edge/webdriver-chromium/#upgrading-from-selenium-3');
+  }
+
+  /**
    * Creates a new browser session for Microsoft's Edge browser.
    *
    * @param {(capabilities.Capabilities|Options)=} opt_config The configuration
