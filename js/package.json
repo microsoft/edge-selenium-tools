@@ -30,7 +30,7 @@
     "README.md",
     "LICENSE"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "selenium-webdriver": "3.6.0"
   },
   "devDependencies": {
