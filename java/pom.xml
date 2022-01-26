@@ -27,7 +27,7 @@ under the License.
 
     <groupId>com.microsoft.edge</groupId>
     <artifactId>msedge-selenium-tools-java</artifactId>
-    <version>3.141.0</version>
+    <version>3.141.1</version>
     <packaging>jar</packaging>
     <name>Selenium Tools for Microsoft Edge</name>
     <description>An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).</description>
