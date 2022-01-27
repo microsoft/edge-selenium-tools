@@ -60,6 +60,7 @@ namespace Microsoft.Edge.SeleniumTools
     /// }
     /// </code>
     /// </example>
+    [Obsolete("Selenium Tools for Microsoft Edge is deprecated. Please upgrade to Selenium 4 which has built-in support for Microsoft Edge (Chromium): https://docs.microsoft.com/en-us/microsoft-edge/webdriver-chromium/#upgrading-from-selenium-3", false)]
     public class EdgeDriver : RemoteWebDriver
     {
         /// <summary>

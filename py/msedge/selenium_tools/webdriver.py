@@ -54,6 +54,10 @@ class WebDriver(RemoteWebDriver):
 
          """
 
+        warnings.warn(
+            "Selenium Tools for Microsoft Edge is deprecated. Please upgrade to Selenium 4 which has built-in support for Microsoft Edge (Chromium): https://docs.microsoft.com/en-us/microsoft-edge/webdriver-chromium/#upgrading-from-selenium-3",
+            DeprecationWarning, stacklevel=2)
+
         use_chromium = False
         if (options and options.use_chromium) or \
             (desired_capabilities and 'ms:edgeChromium' in desired_capabilities \

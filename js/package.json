@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/edge-selenium-tools",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "description": "An updated EdgeDriver implementation for Selenium 3 with newly-added support for Microsoft Edge (Chromium).",
   "keywords": [
     "automation",
@@ -30,7 +30,7 @@
     "README.md",
     "LICENSE"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "selenium-webdriver": "3.6.0"
   },
   "devDependencies": {
