@@ -1,6 +1,5 @@
 # DEPRECATED: Selenium Tools for Microsoft Edge
 
-<a name="deprecation"></a>
 :warning: **This project is no longer maintained. Please uninstall Selenium Tools for Microsoft Edge and upgrade to [Selenium 4](https://www.selenium.dev/) which has built-in support for Microsoft Edge (Chromium). For help upgrading your Selenium 3 browser tests to Selenium 4, see Selenium's guide [here](https://www.selenium.dev/documentation/webdriver/getting_started/upgrade_to_selenium_4/).** :warning:
 
 This repository will remain available as an example, and for users that have not yet had a chance to upgrade. However, there will be no further activity on issues or pull requests. The [@EdgeDevTools](https://twitter.com/EdgeDevTools) team will continue to work with the Selenium project to contribute future Microsoft Edge Driver features and bug fixes directly to Selenium 4.
